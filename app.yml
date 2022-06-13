@@ -1,0 +1,9 @@
+# [START gae_python37_cloudsql_config]
+runtime: python37
+
+env_variables:
+  CLOUD_SQL_USERNAME: instance1
+  CLOUD_SQL_PASSWORD: abc123
+  CLOUD_SQL_DATABASE_NAME: country
+  CLOUD_SQL_CONNECTION_NAME: nethmi-test:us-central1:instance1
+# [END gae_python37_cloudsql_config]
