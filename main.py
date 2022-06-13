@@ -25,7 +25,7 @@ def main():
         # Set up Cloud SQL Proxy (cloud.google.com/sql/docs/mysql/sql-proxy)
         # so that your application can use 127.0.0.1:3306 to connect to your
         # Cloud SQL instance
-        host = '127.0.0.1'
+        host = '0.0.0.0'
         cnx = pymysql.connect(user=db_user, password=db_password,
                               host=host, db=db_name)
 
@@ -40,4 +40,4 @@ def main():
 
 
 if __name__ == '__main__':
-    app.run(host='127.0.0.1', port=8080, debug=True)
+    app.run(host='0.0.0.0', port=8080, debug=True)
