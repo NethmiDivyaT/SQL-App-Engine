@@ -21,7 +21,7 @@ def main():
         cnx = pymysql.connect(user=db_user, password=db_password,
                               unix_socket=unix_socket, db=db_name)
     with cnx.cursor() as cursor:
-        cursor.execute('select * from country;')
+        cursor.execute('select * from demo_tbl;')
         result = cursor.fetchall()
         current_msg = result[0][0]
     cnx.close()
