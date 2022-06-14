@@ -20,15 +20,6 @@ def main():
         unix_socket = '/cloudsql/{}'.format(db_connection_name)
         cnx = pymysql.connect(user=db_user, password=db_password,
                               unix_socket=unix_socket, db=db_name)
-    else:
-        # If running locally, use the TCP connections instead
-        # Set up Cloud SQL Proxy (cloud.google.com/sql/docs/mysql/sql-proxy)
-        # so that your application can use 127.0.0.1:3306 to connect to your
-        # Cloud SQL instance
-        host = '0.0.0.0'
-        cnx = pymysql.connect(user=db_user, password=db_password,
-                              host=host, db=db_name)
-
     with cnx.cursor() as cursor:
         cursor.execute('select * from country;')
         result = cursor.fetchall()
@@ -36,7 +27,6 @@ def main():
     cnx.close()
 
     return str(current_msg)
-# [END gae_python37_cloudsql_mysql]
 
 
 if __name__ == '__main__':
