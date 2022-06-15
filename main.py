@@ -50,7 +50,7 @@ def singleRowInsert():
 
         with connection:
 
-            sqlStatement = ("CREATE DATABASE IF NOT EXISTS work_shop_db")
+            sqlStatement = ("CREATE DATABASE IF NOT EXISTS country")
             cur.execute(sqlStatement)
 
             createTable = ("CREATE TABLE IF NOT EXISTS test_country_table ("
@@ -114,7 +114,7 @@ def countryTable():
 
             with connection:
 
-                sqlStatement = ("CREATE DATABASE IF NOT EXISTS work_shop_db")
+                sqlStatement = ("CREATE DATABASE IF NOT EXISTS country")
                 cur.execute(sqlStatement)
 
                 createTable = ("CREATE TABLE IF NOT EXISTS country_table ("
