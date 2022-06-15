@@ -1,30 +1,37 @@
 import os
 
-from flask import Flask
+from flask import Flask, flash, redirect, request, render_template
 import pymysql
 
-db_user = os.environ.get('CLOUD_SQL_USERNAME')
-db_password = os.environ.get('CLOUD_SQL_PASSWORD')
-db_name = os.environ.get('CLOUD_SQL_DATABASE_NAME')
-db_connection_name = os.environ.get('CLOUD_SQL_CONNECTION_NAME')
+import mysql.connector
+from mysql.connector.constants import ClientFlag
+
+config = {
+    'user': 'user1',
+    'password': 'abc123',
+    'host': '34.133.184.1',
+    'client_flags': [ClientFlag.SSL],
+    'ssl_ca': 'ssl/server-ca.pem',
+    'ssl_cert': 'ssl/client-cert.pem',
+    'ssl_key': 'ssl/client-key.pem'
+}
 
 app = Flask(__name__)
 
 
 @app.route('/')
 def main():
-    # When deployed to App Engine, the `GAE_ENV` environment variable will be
-    # set to `standard`
-    if os.environ.get('GAE_ENV') == 'standard':
-        # If deployed, use the local socket interface for accessing Cloud SQL
-        unix_socket = '/cloudsql/{}'.format(db_connection_name)
-        cnx = pymysql.connect(user=db_user, password=db_password,
-                              unix_socket=unix_socket, db=db_name)
-    with cnx.cursor() as cursor:
-        cursor.execute('select * from demo_tbl;')
-        result = cursor.fetchall()
-        current_msg = result[0][0]
-    cnx.close()
+    connection = pymysql.connect(**config)
+    cur = connection.cursor()
+
+    if request.method == 'GET':
+        with connection:
+            with cur as cursor:
+
+                cursor.execute("select * from country")
+                result = cursor.fetchall()
+
+            cur.close()
 
     return str(current_msg)
 
