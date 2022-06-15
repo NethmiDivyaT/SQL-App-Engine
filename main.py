@@ -19,7 +19,6 @@ config = {
     'ssl_key': 'ssl/client-key.pem'
 }
 
-
 app = Flask(__name__, template_folder='template')
 
 
@@ -40,7 +39,7 @@ def singleRowInsert():
         with connection:
             with cur as cursor:
 
-                cursor.execute("select * from country")
+                cursor.execute("select * from test_country_table")
                 result = cursor.fetchall()
 
             cur.close()
@@ -51,10 +50,10 @@ def singleRowInsert():
 
         with connection:
 
-            sqlStatement = ("CREATE DATABASE IF NOT EXISTS country")
+            sqlStatement = ("CREATE DATABASE IF NOT EXISTS work_shop_db")
             cur.execute(sqlStatement)
 
-            createTable = ("CREATE TABLE IF NOT EXISTS country ("
+            createTable = ("CREATE TABLE IF NOT EXISTS test_country_table ("
                            "id INT NOT NULL AUTO_INCREMENT,"
                            "countryName VARCHAR(100),"
                            "currency  VARCHAR(50),"
@@ -65,7 +64,7 @@ def singleRowInsert():
 
             cur.execute(createTable)
 
-            sqlData = ("INSERT INTO country (id, countryName, currency, population, gdp, flagURI) "
+            sqlData = ("INSERT INTO test_country_table (id, countryName, currency, population, gdp, flagURI) "
                        "VALUES (%s, %s, %s, %s, %s, %s)")
 
             cur.execute(sqlData, (0, "sample name", "sample currency",
@@ -74,7 +73,7 @@ def singleRowInsert():
 
             with cur as cursor:
 
-                cursor.execute("select * from country")
+                cursor.execute("select * from test_country_table")
                 result = cursor.fetchall()
 
             cur.close()
@@ -93,7 +92,7 @@ def countryTable():
         with connection:
             with cur as cursor:
 
-                cursor.execute("select * from country")
+                cursor.execute("select * from country_table")
                 result = cursor.fetchall()
 
             cur.close()
@@ -115,10 +114,10 @@ def countryTable():
 
             with connection:
 
-                sqlStatement = ("CREATE DATABASE IF NOT EXISTS country")
+                sqlStatement = ("CREATE DATABASE IF NOT EXISTS work_shop_db")
                 cur.execute(sqlStatement)
 
-                createTable = ("CREATE TABLE IF NOT EXISTS country ("
+                createTable = ("CREATE TABLE IF NOT EXISTS country_table ("
                                "id INT NOT NULL AUTO_INCREMENT,"
                                "countryName VARCHAR(100),"
                                "currency  VARCHAR(50),"
@@ -129,7 +128,7 @@ def countryTable():
 
                 cur.execute(createTable)
 
-                sqlData = ("INSERT INTO country (id, countryName, currency, population, gdp, flagURI) "
+                sqlData = ("INSERT INTO country_table (id, countryName, currency, population, gdp, flagURI) "
                            "VALUES (%s, %s, %s, %s, %s, %s)")
 
                 cur.execute(sqlData, (0, country_name, currency,
@@ -138,7 +137,7 @@ def countryTable():
 
                 with cur as cursor:
 
-                    cursor.execute("select * from country")
+                    cursor.execute("select * from country_table")
                     result = cursor.fetchall()
 
                 cur.close()
@@ -181,7 +180,7 @@ def updateTable():
 
             with cur as cursor:
 
-                cursor.execute("select * from country")
+                cursor.execute("select * from country_table")
                 result = cursor.fetchall()
 
             cur.close()
@@ -195,14 +194,14 @@ def deleteTable(id):
     connection = pymysql.connect(**config)
     cur = connection.cursor()
 
-    sqlDelete = " DELETE FROM `country` WHERE `id` = %s"
+    sqlDelete = " DELETE FROM `country_table` WHERE `id` = %s"
 
     cur.execute(sqlDelete, id)
     connection.commit()
 
     with cur as cursor:
 
-        cursor.execute("select * from country")
+        cursor.execute("select * from country_table")
         result = cursor.fetchall()
 
     cur.close()
